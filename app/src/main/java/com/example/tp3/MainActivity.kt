@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         //Display the InscriptionFragment
-        supportFragmentManager.beginTransaction().replace(R.id.main, InscriptionFragment()).commit()
-       
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, InscriptionFragment()).commit()
+
     }
 }
