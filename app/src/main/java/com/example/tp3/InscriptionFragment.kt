@@ -64,7 +64,7 @@ class InscriptionFragment : Fragment() {
             bundle.putString("telephone", telephone)
             bundle.putString("email", email)
             bundle.putString("user", login)
-            bundle.putString(checkBoxesString, "checkBoxesString")
+            bundle.putString("hobbies", checkBoxesString )
 
            //log
             Log.d("InscriptionFragment", "Nom : $nom")
