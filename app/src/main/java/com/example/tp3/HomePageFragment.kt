@@ -33,13 +33,13 @@ class HomePageFragment : Fragment() {
             transaction.commit()
         }
 
-//        btnConnexion.setOnClickListener {
-//            val fragment = ConnexionFragment()
-//            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-//            transaction.replace(R.id.fragment_container, fragment)
-//            transaction.addToBackStack(null)
-//            transaction.commit()
-//        }
+        btnConnexion.setOnClickListener {
+            val fragment = ConnexionFragment()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, fragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
 
 
 
