@@ -41,7 +41,7 @@ class ConnexionFragment : Fragment() {
             val login = view.findViewById<EditText>(R.id.editTextUsername)?.text.toString()
             val password = view.findViewById<EditText>(R.id.editTextPassword)?.text.toString()
 
-            Toast.makeText(requireContext(), "Login : $login, Password : $password", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), databaseHelper.checkUser(login, password).toString(), Toast.LENGTH_SHORT).show()
 
             if (databaseHelper.checkUser(login, password)) {
                 val fragment = PlaningFragment()

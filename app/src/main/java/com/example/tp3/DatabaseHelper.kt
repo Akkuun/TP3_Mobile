@@ -81,4 +81,19 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         return exists
 
     }
+
+    fun insertPlaning(planing: Planing): Boolean {
+        val db = this.writableDatabase
+        val values = ContentValues().apply {
+            put("slot1", planing.slot1)
+            put("slot2", planing.slot2)
+            put("slot3", planing.slot3)
+            put("slot4", planing.slot4)
+        }
+
+        val result = db.insert("planing", null, values)
+        db.close()
+        return result != -1L
+
+    }
 }
