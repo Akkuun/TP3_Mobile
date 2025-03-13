@@ -28,6 +28,13 @@ class InscriptionFragment : Fragment() {
 
         val databaseHelper = DatabaseHelper(requireContext())
 
+        val btnHome = view.findViewById<Button>(R.id.buttongoBack)
+        btnHome.setOnClickListener {
+            //go back to the home page
+            parentFragmentManager.popBackStack()
+        }
+
+
         val btnSoumettre = view.findViewById<Button>(R.id.buttonSubmit)
         btnSoumettre.setOnClickListener {
             val login = view.findViewById<EditText>(R.id.editTextLogin)?.text.toString()
