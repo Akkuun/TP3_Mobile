@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editTextSlot1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="08h-10h" />
+
+    <EditText
+        android:id="@+id/editTextSlot2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="10h-12h" />
+
+    <EditText
+        android:id="@+id/editTextSlot3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="14h-16h" />
+
+    <EditText
+        android:id="@+id/editTextSlot4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="16h-18h" />
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Valider" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Retourner à l'accueil"
+        android:id="@+id/buttonHome"/>
+
+</LinearLayout>

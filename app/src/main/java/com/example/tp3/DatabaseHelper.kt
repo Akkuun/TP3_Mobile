@@ -70,4 +70,15 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         db.close()
         return exists
     }
+
+    fun checkUser(login: String, password: String): Boolean {
+        val db = this.readableDatabase
+        val query = "SELECT * FROM $TABLE_USERS WHERE $COLUMN_LOGIN = ? AND $COLUMN_PASSWORD = ?"
+        val cursor = db.rawQuery(query, arrayOf(login, password))
+        val exists = cursor.count > 0
+        cursor.close()
+        db.close()
+        return exists
+
+    }
 }

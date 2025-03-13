@@ -3,7 +3,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.tp3.DatabaseHelper
+import com.example.tp3.PlaningFragment
 import com.example.tp3.R
 
 class ConnexionFragment : Fragment() {
@@ -19,16 +23,35 @@ class ConnexionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val btnConnexion = view.findViewById<Button>(R.id.buttonConnexion);
+        val databaseHelper = DatabaseHelper(requireContext())
+
+        val btnConnexion = view.findViewById<Button>(R.id.buttonLogin);
         val btnRetour = view.findViewById<Button>(R.id.buttonRetour);
 
         btnRetour.setOnClickListener() {
+
             val fragment = HomePageFragment()
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, fragment)
             transaction.addToBackStack(null)
             transaction.commit()
         }
+
+        btnConnexion.setOnClickListener() {
+            val login = view.findViewById<EditText>(R.id.editTextUsername)?.text.toString()
+            val password = view.findViewById<EditText>(R.id.editTextPassword)?.text.toString()
+
+            Toast.makeText(requireContext(), "Login : $login, Password : $password", Toast.LENGTH_SHORT).show()
+
+            if (databaseHelper.checkUser(login, password)) {
+                val fragment = PlaningFragment()
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.fragment_container, fragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
+         }
+
 
     }
 
