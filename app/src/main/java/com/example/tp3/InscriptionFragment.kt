@@ -26,68 +26,52 @@ class InscriptionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Get the button from the submit id
+        val databaseHelper = DatabaseHelper(requireContext())
+
         val btnSoumettre = view.findViewById<Button>(R.id.buttonSubmit)
-
-        // listener
         btnSoumettre.setOnClickListener {
+            val login = view.findViewById<EditText>(R.id.editTextLogin)?.text.toString()
+            val password = view.findViewById<EditText>(R.id.editTextPassword)?.text.toString()
+            val nom = view.findViewById<EditText>(R.id.editTextFirstName)?.text.toString()
+            val prenom = view.findViewById<EditText>(R.id.editTextLastName)?.text.toString()
+            val telephone = view.findViewById<EditText>(R.id.editTextPhoneNumber)?.text.toString()
+            val email = view.findViewById<EditText>(R.id.editTextEmail)?.text.toString()
+            val dateNaissance = view.findViewById<EditText>(R.id.datePickerBirthDate)?.text.toString()
 
-
-            // Get the checkboxes
             val checkBoxList = listOf(
                 view.findViewById<CheckBox>(R.id.checkBoxCinema),
                 view.findViewById<CheckBox>(R.id.checkBoxMusic),
                 view.findViewById<CheckBox>(R.id.checkBoxSport),
                 view.findViewById<CheckBox>(R.id.checkBoxReading)
             )
-            // get user's input
-            val login = view.findViewById<EditText>(R.id.editTextLogin).toString();
-            val nom = view.findViewById<EditText>(R.id.editTextFirstName)?.text.toString()
-            val prenom = view.findViewById<EditText>(R.id.editTextLastName)?.text.toString()
-            val telephone = view.findViewById<EditText>(R.id.editTextPhoneNumber)?.text.toString()
-            val email = view.findViewById<EditText>(R.id.editTextEmail)?.text.toString()
-            val dateNaissance =
-                view.findViewById<EditText>(R.id.datePickerBirthDate)?.text.toString()
-            val password = view.findViewById<EditText>(R.id.editTextPassword)?.text.toString()
+            val hobbies = checkBoxList.filter { it.isChecked }.joinToString(", ") { it.text.toString() }
 
-            //concateneant all the checked checkboxes into a string
-            val checkBoxesString =
-                checkBoxList.filter { it.isChecked }.joinToString(", ") { it.text.toString() }
-
-
-            // Create a bundle to pass the data to the next fragment
-            val bundle = Bundle()
-            bundle.putString("login", login)
-            bundle.putString("password", password)
-            bundle.putString("nom", nom)
-            bundle.putString("prenom", prenom)
-            bundle.putString("date_naissance", dateNaissance)
-            bundle.putString("telephone", telephone)
-            bundle.putString("email", email)
-            bundle.putString("user", login)
-            bundle.putString("hobbies", checkBoxesString)
-
-
-            // We create a instance of the fragment to pass it to the fragment manager
-            val recapFragment = DetailsFragment()
-            //asociation of the data
-            recapFragment.arguments = bundle
-
-
-            // if data correcly filled we pass to the next fragment
-            if (this.checkAllData()) {
-                // Change actual fragment to the next fragment
-                parentFragmentManager.beginTransaction()
-                    .replace(
-                        R.id.fragment_container,
-                        recapFragment
-                    ) // get the fragment container from the main activity
-                    .addToBackStack(null)
-                    .commit()
+            if (databaseHelper.isLoginExists(login)) {
+                Toast.makeText(requireContext(), "Login déjà existant !", Toast.LENGTH_SHORT).show()
+            } else {
+                val newUser = User(login, password, nom, prenom, telephone, email, dateNaissance, hobbies)
+                if (databaseHelper.insertUser(newUser)) {
+                    Toast.makeText(requireContext(), "Inscription réussie !", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, DetailsFragment().apply {
+                            arguments = Bundle().apply {
+                                putString("login", login)
+                                putString("password", password)
+                                putString("nom", nom)
+                                putString("prenom", prenom)
+                                putString("date_naissance", dateNaissance)
+                                putString("telephone", telephone)
+                                putString("email", email)
+                                putString("hobbies", hobbies)
+                            }
+                        })
+                        .addToBackStack(null)
+                        .commit()
+                } else {
+                    Toast.makeText(requireContext(), "Erreur lors de l'inscription", Toast.LENGTH_SHORT).show()
+                }
             }
-
         }
-
     }
 
     //function that check all the data filled by the user are correct
