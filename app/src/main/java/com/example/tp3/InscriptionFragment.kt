@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -29,6 +30,8 @@ class InscriptionFragment : Fragment() {
         // Get the button from the submit id
         val btnSoumettre = view.findViewById<Button>(R.id.buttonSubmit)
 
+
+
         // listener
         btnSoumettre.setOnClickListener {
             // get user's input
@@ -39,11 +42,18 @@ class InscriptionFragment : Fragment() {
             val email = view.findViewById<EditText>(R.id.editTextEmail).text.toString()
             val dateNaissance = view.findViewById<EditText>(R.id.datePickerBirthDate).text.toString()
 
-            Log.d("InscriptionFragment", "Nom : $nom")
-            Log.d("InscriptionFragment", "Prenom : $prenom")
-            Log.d("InscriptionFragment", "Date de naissance : $dateNaissance")
-            Log.d("InscriptionFragment", "Telephone : $telephone")
-            Log.d("InscriptionFragment", "Email : $email")
+            // Get the checkboxes
+            val checkBoxList = listOf(
+                view.findViewById<CheckBox>(R.id.checkBoxCinema),
+                view.findViewById<CheckBox>(R.id.checkBoxMusic),
+                view.findViewById<CheckBox>(R.id.checkBoxSport),
+                view.findViewById<CheckBox>(R.id.checkBoxReading)
+            )
+
+
+            //concateneant all the checked checkboxes into a string
+            val checkBoxesString = checkBoxList.filter { it.isChecked }.joinToString(", ") { it.text.toString() }
+
 
 
             // Create a bundle to pass the data to the next fragment
@@ -54,6 +64,7 @@ class InscriptionFragment : Fragment() {
             bundle.putString("telephone", telephone)
             bundle.putString("email", email)
             bundle.putString("user", login)
+            bundle.putString(checkBoxesString, "checkBoxesString")
 
            //log
             Log.d("InscriptionFragment", "Nom : $nom")
