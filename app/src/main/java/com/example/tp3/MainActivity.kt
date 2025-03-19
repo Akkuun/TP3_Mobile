@@ -1,5 +1,6 @@
 package com.example.tp3
 
+import HomePageFragment
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,8 +12,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        //Display the InscriptionFragment
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, InscriptionFragment()).commit()
+        //Display the HomePage fragment that contains the buttons Nouvelle inscription and Connexion
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, HomePageFragment()).commit()
 
     }
 }
