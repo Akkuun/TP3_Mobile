@@ -22,6 +22,8 @@ class PlaningFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val databaseplaningHelper = DatabasePlaningHelper(requireContext())
+
         val goBackButton = view.findViewById<TextView>(R.id.buttonHome)
         val saveButton = view.findViewById<TextView>(R.id.buttonSave)
 
@@ -39,20 +41,23 @@ class PlaningFragment : Fragment(){
             val slot3 = view.findViewById<TextView>(R.id.editTextSlot3).text.toString()
             val slot4 = view.findViewById<TextView>(R.id.editTextSlot4).text.toString()
 
-            Toast.makeText(requireContext(), "Slot1: $slot1, Slot2: $slot2, Slot3: $slot3, Slot4: $slot4", Toast.LENGTH_SHORT).show()
-            //login session actual
+             //login session actual
             val sharedPreferences = requireActivity().getSharedPreferences("session", android.content.Context.MODE_PRIVATE)
             val userLogin = sharedPreferences.getString("user_login", null)
-            Toast.makeText(requireContext(), "User login: $userLogin", Toast.LENGTH_SHORT).show()
 
-            val planing = Planing(slot1, slot2, slot3, slot4)
-            val databaseUserHelper = DatabaseUserHelper(requireContext())
-            if (databaseUserHelper.insertPlaning(planing)) {
+
+            val planing = Planing(userLogin.toString(),slot1, slot2, slot3, slot4)
+            val inserted = databaseplaningHelper.insertPlaning(planing)
+            if (inserted) {
+                Toast.makeText(requireContext(), "Planning enregistré", Toast.LENGTH_SHORT).show()
                 val fragment = PlaningDetailFragment()
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragment_container, fragment)
                 transaction.addToBackStack(null)
                 transaction.commit()
+            }
+            else {
+                Toast.makeText(requireContext(), "Erreur lors de l'enregistrement du planning", Toast.LENGTH_SHORT).show()
             }
         }
 
