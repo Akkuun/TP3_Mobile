@@ -41,8 +41,7 @@ class ConnexionFragment : Fragment() {
             val login = view.findViewById<EditText>(R.id.editTextUsername)?.text.toString()
             val password = view.findViewById<EditText>(R.id.editTextPassword)?.text.toString()
 
-            Toast.makeText(requireContext(), databaseHelper.checkUser(login, password).toString(), Toast.LENGTH_SHORT).show()
-            // if the credentials are correct, we go to the planning page
+             // if the credentials are correct, we go to the planning page
             if (databaseHelper.checkUser(login, password)) {
                 // we put the login in the shared preferences
                 val sharedPreferences = requireActivity().getSharedPreferences("session", android.content.Context.MODE_PRIVATE)
@@ -55,6 +54,8 @@ class ConnexionFragment : Fragment() {
                 transaction.replace(R.id.fragment_container, fragment)
                 transaction.addToBackStack(null)
                 transaction.commit()
+            }else{
+                Toast.makeText(requireContext(), "Erreur lors de l'authentification", Toast.LENGTH_SHORT).show()
             }
          }
 
