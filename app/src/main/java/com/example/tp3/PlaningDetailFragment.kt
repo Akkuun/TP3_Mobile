@@ -2,6 +2,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.tp3.DatabaseUserHelper
@@ -9,6 +10,8 @@ import com.example.tp3.R
 import com.example.tp3.DatabasePlaningHelper
 
 class PlaningDetailFragment : Fragment() {
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -20,13 +23,22 @@ class PlaningDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val buttonHome = view.findViewById<Button>(R.id.buttonHome)
+
+        //go back button
+        buttonHome.setOnClickListener {
+            val fragment = HomePageFragment()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, fragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
 
         //get session information
         val sharedPreferences =
             requireActivity().getSharedPreferences("session", android.content.Context.MODE_PRIVATE)
         val userLogin = sharedPreferences.getString("user_login", null)
 
-        Toast.makeText(requireContext(), userLogin, Toast.LENGTH_SHORT).show()
         // if the user is connected, we display all his planning information
         if (userLogin != null) {
             //get planning information from the database

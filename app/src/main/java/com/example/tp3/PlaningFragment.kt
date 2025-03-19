@@ -10,7 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 
-class PlaningFragment : Fragment(){
+class PlaningFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,17 +36,23 @@ class PlaningFragment : Fragment(){
         }
 
         saveButton.setOnClickListener {
+
+            //get the data from the slots
             val slot1 = view.findViewById<TextView>(R.id.editTextSlot1).text.toString()
             val slot2 = view.findViewById<TextView>(R.id.editTextSlot2).text.toString()
             val slot3 = view.findViewById<TextView>(R.id.editTextSlot3).text.toString()
             val slot4 = view.findViewById<TextView>(R.id.editTextSlot4).text.toString()
 
-             //login session actual
-            val sharedPreferences = requireActivity().getSharedPreferences("session", android.content.Context.MODE_PRIVATE)
+            //login session actual
+            val sharedPreferences = requireActivity().getSharedPreferences(
+                "session",
+                android.content.Context.MODE_PRIVATE
+            )
             val userLogin = sharedPreferences.getString("user_login", null)
 
-
-            val planing = Planing(userLogin.toString(),slot1, slot2, slot3, slot4)
+            // creation of the planing object to insert in the database after
+            val planing = Planing(userLogin.toString(), slot1, slot2, slot3, slot4)
+            //bool val to check if the planing is correctly inserted in the db
             val inserted = databaseplaningHelper.insertPlaning(planing)
             if (inserted) {
                 Toast.makeText(requireContext(), "Planning enregistré", Toast.LENGTH_SHORT).show()
@@ -55,9 +61,12 @@ class PlaningFragment : Fragment(){
                 transaction.replace(R.id.fragment_container, fragment)
                 transaction.addToBackStack(null)
                 transaction.commit()
-            }
-            else {
-                Toast.makeText(requireContext(), "Erreur lors de l'enregistrement du planning", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Erreur lors de l'enregistrement du planning",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 

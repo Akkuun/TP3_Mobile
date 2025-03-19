@@ -43,7 +43,7 @@ class ConnexionFragment : Fragment() {
 
              // if the credentials are correct, we go to the planning page
             if (databaseUserHelper.checkUser(login, password)) {
-                // we put the login in the shared preferences
+                // we put the login in the shared preferences to create a session
                 val sharedPreferences = requireActivity().getSharedPreferences("session", android.content.Context.MODE_PRIVATE)
                 sharedPreferences.edit()
                     .putString("user_login", login)
