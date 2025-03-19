@@ -55,7 +55,12 @@ class InscriptionFragment : Fragment() {
 
             if (databaseHelper.isLoginExists(login)) {
                 Toast.makeText(requireContext(), "Login déjà existant !", Toast.LENGTH_SHORT).show()
-            } else {
+            } else if(!checkAllData()){
+                Toast.makeText(requireContext(), "Erreur lors de l'inscription", Toast.LENGTH_SHORT).show()
+            }
+
+
+                else {
                 val newUser = User(login, password, nom, prenom, telephone, email, dateNaissance, hobbies)
                 if (databaseHelper.insertUser(newUser)) {
                     Toast.makeText(requireContext(), "Inscription réussie !", Toast.LENGTH_SHORT).show()

@@ -96,4 +96,15 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         return result != -1L
 
     }
+
+    fun getPlanning(userLogin: String): Any {
+        val db = this.readableDatabase
+        val query = "SELECT * FROM planing WHERE login = ?"
+        val cursor = db.rawQuery(query, arrayOf(userLogin))
+        val exists = cursor.count > 0
+        cursor.close()
+        db.close()
+        return exists
+
+    }
 }

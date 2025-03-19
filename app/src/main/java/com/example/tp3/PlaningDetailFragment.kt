@@ -2,7 +2,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.tp3.DatabaseHelper
 import com.example.tp3.R
 
 class PlaningDetailFragment : Fragment(){
@@ -18,5 +21,20 @@ class PlaningDetailFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val sharedPreferences = requireActivity().getSharedPreferences("session", android.content.Context.MODE_PRIVATE)
+        val userLogin = sharedPreferences.getString("user_login", null)
+
+        // if the user is connected, we display all his planning information
+        if (userLogin != null) {
+            //get planning information from the database
+            val databaseHelper = DatabaseHelper(requireContext())
+            val planning = databaseHelper.getPlanning(userLogin)
+
+            Toast.makeText(requireContext(), planning.toString(), Toast.LENGTH_SHORT).show()
+
+
+        } else {
+           Toast.makeText(requireContext(), "Vous devez vous connecter pour accéder à cette page", Toast.LENGTH_SHORT).show()
+        }
     }
 }

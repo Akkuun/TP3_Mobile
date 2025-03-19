@@ -42,8 +42,14 @@ class ConnexionFragment : Fragment() {
             val password = view.findViewById<EditText>(R.id.editTextPassword)?.text.toString()
 
             Toast.makeText(requireContext(), databaseHelper.checkUser(login, password).toString(), Toast.LENGTH_SHORT).show()
-
+            // if the credentials are correct, we go to the planning page
             if (databaseHelper.checkUser(login, password)) {
+                // we put the login in the shared preferences
+                val sharedPreferences = requireActivity().getSharedPreferences("session", android.content.Context.MODE_PRIVATE)
+                sharedPreferences.edit()
+                    .putString("user_login", login)
+                    .apply()
+
                 val fragment = PlaningFragment()
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragment_container, fragment)
