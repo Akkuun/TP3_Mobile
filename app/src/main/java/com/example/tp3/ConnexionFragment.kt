@@ -6,7 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.tp3.DatabaseHelper
+import com.example.tp3.DatabaseUserHelper
 import com.example.tp3.PlaningFragment
 import com.example.tp3.R
 
@@ -23,7 +23,7 @@ class ConnexionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val databaseHelper = DatabaseHelper(requireContext())
+        val databaseUserHelper = DatabaseUserHelper(requireContext())
 
         val btnConnexion = view.findViewById<Button>(R.id.buttonLogin);
         val btnRetour = view.findViewById<Button>(R.id.buttonRetour);
@@ -42,7 +42,7 @@ class ConnexionFragment : Fragment() {
             val password = view.findViewById<EditText>(R.id.editTextPassword)?.text.toString()
 
              // if the credentials are correct, we go to the planning page
-            if (databaseHelper.checkUser(login, password)) {
+            if (databaseUserHelper.checkUser(login, password)) {
                 // we put the login in the shared preferences
                 val sharedPreferences = requireActivity().getSharedPreferences("session", android.content.Context.MODE_PRIVATE)
                 sharedPreferences.edit()

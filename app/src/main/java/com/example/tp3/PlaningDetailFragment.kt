@@ -2,10 +2,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.tp3.DatabaseHelper
+import com.example.tp3.DatabaseUserHelper
 import com.example.tp3.R
 
 class PlaningDetailFragment : Fragment(){
@@ -27,8 +26,8 @@ class PlaningDetailFragment : Fragment(){
         // if the user is connected, we display all his planning information
         if (userLogin != null) {
             //get planning information from the database
-            val databaseHelper = DatabaseHelper(requireContext())
-            val planning = databaseHelper.getPlanning(userLogin)
+            val databaseUserHelper = DatabaseUserHelper(requireContext())
+            val planning = databaseUserHelper.getPlanning(userLogin)
 
             Toast.makeText(requireContext(), planning.toString(), Toast.LENGTH_SHORT).show()
 

@@ -1,7 +1,6 @@
 package com.example.tp3
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,6 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import kotlin.math.log
 
 class InscriptionFragment : Fragment() {
 
@@ -26,7 +24,7 @@ class InscriptionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val databaseHelper = DatabaseHelper(requireContext())
+        val databaseUserHelper = DatabaseUserHelper(requireContext())
 
         val btnHome = view.findViewById<Button>(R.id.buttongoBack)
         btnHome.setOnClickListener {
@@ -53,7 +51,7 @@ class InscriptionFragment : Fragment() {
             )
             val hobbies = checkBoxList.filter { it.isChecked }.joinToString(", ") { it.text.toString() }
 
-            if (databaseHelper.isLoginExists(login)) {
+            if (databaseUserHelper.isLoginExists(login)) {
                 Toast.makeText(requireContext(), "Login déjà existant !", Toast.LENGTH_SHORT).show()
             } else if(!checkAllData()){
                 Toast.makeText(requireContext(), "Erreur lors de l'inscription", Toast.LENGTH_SHORT).show()
@@ -62,7 +60,7 @@ class InscriptionFragment : Fragment() {
 
                 else {
                 val newUser = User(login, password, nom, prenom, telephone, email, dateNaissance, hobbies)
-                if (databaseHelper.insertUser(newUser)) {
+                if (databaseUserHelper.insertUser(newUser)) {
                     Toast.makeText(requireContext(), "Inscription réussie !", Toast.LENGTH_SHORT).show()
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, DetailsFragment().apply {

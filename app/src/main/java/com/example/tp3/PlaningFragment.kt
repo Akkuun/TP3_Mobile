@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 
 class PlaningFragment : Fragment(){
@@ -38,9 +39,15 @@ class PlaningFragment : Fragment(){
             val slot3 = view.findViewById<TextView>(R.id.editTextSlot3).text.toString()
             val slot4 = view.findViewById<TextView>(R.id.editTextSlot4).text.toString()
 
+            Toast.makeText(requireContext(), "Slot1: $slot1, Slot2: $slot2, Slot3: $slot3, Slot4: $slot4", Toast.LENGTH_SHORT).show()
+            //login session actual
+            val sharedPreferences = requireActivity().getSharedPreferences("session", android.content.Context.MODE_PRIVATE)
+            val userLogin = sharedPreferences.getString("user_login", null)
+            Toast.makeText(requireContext(), "User login: $userLogin", Toast.LENGTH_SHORT).show()
+
             val planing = Planing(slot1, slot2, slot3, slot4)
-            val databaseHelper = DatabaseHelper(requireContext())
-            if (databaseHelper.insertPlaning(planing)) {
+            val databaseUserHelper = DatabaseUserHelper(requireContext())
+            if (databaseUserHelper.insertPlaning(planing)) {
                 val fragment = PlaningDetailFragment()
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragment_container, fragment)
