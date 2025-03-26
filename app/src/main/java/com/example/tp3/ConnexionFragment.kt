@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.tp3.DatabaseUserHelper
 import com.example.tp3.PlaningFragment
 import com.example.tp3.R
+import com.example.tp3.UserPageFragment
 
 class ConnexionFragment : Fragment() {
 
@@ -49,7 +50,7 @@ class ConnexionFragment : Fragment() {
                     .putString("user_login", login)
                     .apply()
 
-                val fragment = PlaningFragment()
+                val fragment = UserPageFragment()
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragment_container, fragment)
                 transaction.addToBackStack(null)
