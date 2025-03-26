@@ -82,29 +82,5 @@ class DatabaseUserHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
 
     }
 
-    fun insertPlaning(planing: Planing): Boolean {
-        val db = this.writableDatabase
-        val values = ContentValues().apply {
-            put("slot1", planing.slot1)
-            put("slot2", planing.slot2)
-            put("slot3", planing.slot3)
-            put("slot4", planing.slot4)
-        }
 
-        val result = db.insert("planing", null, values)
-        db.close()
-        return result != -1L
-
-    }
-
-    fun getPlanning(userLogin: String): Any {
-        val db = this.readableDatabase
-        val query = "SELECT * FROM planing WHERE login = ?"
-        val cursor = db.rawQuery(query, arrayOf(userLogin))
-        val exists = cursor.count > 0
-        cursor.close()
-        db.close()
-        return exists
-
-    }
 }
